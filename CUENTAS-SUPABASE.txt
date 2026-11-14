@@ -1,0 +1,78 @@
+ACTIVAR LAS CUENTAS (REGISTRO SIN CONTRASEÑA)
+==============================================
+
+Cómo funciona: la persona escribe su correo, le llega un código de 6 dígitos,
+lo escribe y listo. No hay contraseñas. Sus datos se guardan en su cuenta y
+aparecen en todos los dispositivos donde entre con ese correo. Cada persona
+ve solo lo suyo.
+
+Se usa Supabase (supabase.com), que tiene un plan gratis. Son 6 pasos y se
+hacen una sola vez.
+
+PASO 1. CREAR EL PROYECTO
+  1. Entra a https://supabase.com y crea una cuenta gratis.
+  2. Toca "New project". Ponle un nombre (por ejemplo, mascota-ahorradora).
+  3. Escribe una contraseña para la base de datos y guárdala. La app no la usa.
+  4. En Region elige una cercana (por ejemplo, South America (São Paulo)).
+  5. Toca "Create new project" y espera uno o dos minutos.
+
+PASO 2. CREAR LA TABLA DE DATOS
+  1. En el menú de la izquierda entra a "SQL Editor".
+  2. Abre el archivo supabase.sql de esta carpeta, copia TODO su contenido,
+     pégalo en el editor y toca "Run".
+  3. Debe decir "Success. No rows returned".
+
+PASO 3. HACER QUE EL CORREO ENVÍE UN CÓDIGO
+  Por defecto Supabase envía un enlace y no un código. Hay que cambiar dos plantillas.
+  1. Entra a Authentication > Email Templates (en algunas versiones se llama
+     Authentication > Emails).
+  2. Abre la plantilla "Magic Link". Reemplaza el contenido por:
+       <h2>Tu código</h2>
+       <p>Tu código para entrar a Mascota Ahorradora es: <b>{{ .Token }}</b></p>
+     Guarda los cambios.
+  3. Abre la plantilla "Confirm signup" y haz lo mismo (mismo texto) para que
+     las personas nuevas también reciban el código. Guarda.
+
+PASO 4. COPIAR LOS DOS DATOS DEL PROYECTO
+  1. Entra a Project Settings (la rueda de engranaje) > API.
+  2. Copia "Project URL" (algo como https://abcdefgh.supabase.co).
+  3. Copia la clave pública: "anon public". Si tu proyecto muestra "Publishable
+     key", puedes usar esa. Si con esa clave falla el inicio de sesión, usa la
+     "anon" que está en la pestaña "Legacy API keys".
+  4. NUNCA uses la clave "service_role": esa es secreta.
+  La clave anon es pública por diseño. Es segura porque la tabla del paso 2
+  solo deja que cada persona lea y cambie su propia fila.
+
+PASO 5. PEGARLOS EN LA APP
+  1. En tu repositorio de GitHub, abre el archivo config.js y toca el lápiz (Edit).
+  2. Pega los dos datos entre las comillas:
+       supabaseUrl: 'https://abcdefgh.supabase.co',
+       supabaseAnonKey: 'tu-clave-anon',
+  3. Toca "Commit changes". Vercel publica solo en un minuto.
+
+PASO 6. PROBAR
+  1. Abre tu dirección de Vercel. Debe aparecer la tarjeta "Tu cuenta".
+  2. Escribe tu correo, toca "Enviarme un código", mira tu bandeja (y spam) y
+     escribe el código.
+  3. Cambia un monto. Abre la app en otro dispositivo, entra con el mismo
+     correo y verás los mismos datos.
+
+SI ALGO FALLA
+  - "El servicio de correo no pudo enviar el código" o el código nunca llega:
+    el correo incluido en Supabase tiene límites bajos. Por lo que sé, solo envía
+    a los correos de los miembros de tu proyecto y a pocos mensajes por hora. Para
+    que cualquier persona pueda registrarse, configura tu propio servicio de
+    correo en Authentication > SMTP Settings (Resend y Brevo tienen plan gratis).
+    Conviene confirmar esos límites en la documentación de Supabase.
+  - Llega un enlace en vez de un código: falta editar la plantilla del paso 3
+    ("Magic Link" y también "Confirm signup").
+  - No aparece la tarjeta "Tu cuenta": config.js todavía está vacío o el cambio
+    aún no se publica. Espera un minuto y recarga.
+  - Se pide el código a cada rato: cada lugar donde abres la app (Safari, la app
+    instalada, otro teléfono) guarda su propia sesión. Se entra una vez en cada uno.
+
+PRIVACIDAD
+  - Cerrar sesión borra los datos de ese dispositivo (siguen en la cuenta),
+    para que otra persona que use el mismo teléfono no vea tus montos.
+  - Si dos dispositivos cambian datos distintos al mismo tiempo, queda el
+    cambio más reciente.

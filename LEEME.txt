@@ -1,0 +1,56 @@
+MASCOTA AHORRADORA - CÓMO INSTALARLA EN ANDROID Y IPHONE
+==========================================================
+
+Esta carpeta es la app completa. Para instalarla en un teléfono hay que
+subirla a internet una vez (gratis) y luego agregarla a la pantalla de inicio.
+
+PASO 1. SUBIR LA CARPETA A UN HOSTING GRATUITO
+----------------------------------------------
+La dirección debe empezar con https:// (todos estos servicios la dan).
+
+Opción A: Netlify (la más simple, sin instalar nada)
+  1. Descomprime este .zip en tu computador.
+  2. Entra a https://app.netlify.com/drop e inicia sesión (o crea una cuenta gratis).
+  3. Arrastra la carpeta "mascota-ahorradora" a la página.
+  4. Netlify te da una dirección, por ejemplo https://algo-1234.netlify.app
+
+Opción B: GitHub Pages
+  1. Crea un repositorio público en GitHub y sube todos los archivos de esta carpeta
+     (index.html, manifest.webmanifest, sw.js y la carpeta icons).
+  2. En el repositorio entra a Settings > Pages y elige la rama "main" y la carpeta "/ (root)".
+  3. Tu dirección será https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/
+
+PASO 2. INSTALARLA EN EL TELÉFONO
+---------------------------------
+Android (Chrome):
+  1. Abre tu dirección en Chrome.
+  2. Toca el menú de tres puntos y elige "Instalar app" (o "Agregar a la pantalla principal").
+  3. Confirma. Aparece el ícono del perro en tu pantalla de inicio.
+
+iPhone (Safari):
+  1. Abre tu dirección en Safari (tiene que ser Safari).
+  2. Toca el botón Compartir (el cuadrado con la flecha hacia arriba).
+  3. Elige "Agregar a pantalla de inicio" y toca "Agregar".
+
+Después de instalada, la app abre a pantalla completa y funciona sin internet.
+
+CUENTAS (OPCIONAL)
+------------------
+Para que cada persona entre con su correo, sin contraseña, y vea sus datos en todos
+sus dispositivos, sigue la guía CUENTAS-SUPABASE.txt.
+
+TUS DATOS
+---------
+- Se guardan solo en el teléfono donde usas la app. No se sincronizan entre dispositivos.
+- Si instalas la app en un teléfono y también la abres desde el navegador, cada
+  lugar guarda sus propios datos.
+- Para pasar tus datos a otro teléfono, o para tener una copia de seguridad, usa
+  "Exportar respaldo" (al final de la pantalla) y en el otro teléfono "Importar respaldo".
+- En iPhone, si borras la app o los datos de Safari, se borran tus montos. Exporta un
+  respaldo de vez en cuando y guárdalo en tu nube.
+
+ACTUALIZAR LA APP MÁS ADELANTE
+------------------------------
+Si cambias archivos y vuelves a subir la carpeta, abre la app con internet y los cambios
+llegan solos. Si no aparecen, cambia el número de VERSION en la primera línea del archivo
+sw.js antes de subirla.
